@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDO PISA PRETEST 2025 - Interactive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    .question img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SDO PISA PRETEST 2025 - Interactive Quiz</h1>
+    <form id="quizForm">
+      <!-- Student Information -->
+      <label for="studentName">Student Name:</label>
+      <input type="text" id="studentName" name="studentName" required>
+
+      <label for="schoolName">School:</label>
+      <input type="text" id="schoolName" name="schoolName" required>
+
+      <label for="teacherEmail">Teacher's Email:</label>
+      <input type="email" id="teacherEmail" name="teacherEmail" required>
+
+      <!-- Unit 1: Bees -->
+      <h2>Unit 1: Bees</h2>
+      <div class="question">
+        <p>1. What is the purpose of the bees' dance?</p>
+        <img src="media/image7.png" alt="Bee Dance Diagram">
+        <label>
+          <input type="radio" name="q1" value="A"> A. To celebrate the successful production of honey
+        </label>
+        <label>
+          <input type="radio" name="q1" value="B"> B. To indicate the type of plant the foragers have found
+        </label>
+        <label>
+          <input type="radio" name="q1" value="C"> C. To celebrate the birth of a new Queen Bee
+        </label>
+        <label>
+          <input type="radio" name="q1" value="D"> D. To indicate where the foragers have found food
+        </label>
+        <div class="feedback" id="q1Feedback"></div>
+      </div>
+
+      <div class="question">
+        <p>2. What is the main difference between nectar and honey?</p>
+        <img src="media/image2.png" alt="Bees Collecting Nectar">
+        <label>
+          <input type="radio" name="q2" value="A"> A. The proportion of water in the substance
+        </label>
+        <label>
+          <input type="radio" name="q2" value="B"> B. The proportion of sugar to minerals in the substance
+        </label>
+        <label>
+          <input type="radio" name="q2" value="C"> C. The type of plant from which the substance is gathered
+        </label>
+        <label>
+          <input type="radio" name="q2" value="D"> D. The type of bee which processes the substance
+        </label>
+        <div class="feedback" id="q2Feedback"></div>
+      </div>
+
+      <!-- Unit 2: Naming Typhoons -->
+      <h2>Unit 2: Naming Typhoons</h2>
+      <div class="question">
+        <p>3. How were tropical cyclones identified before the 20th century?</p>
+        <img src="media/image3.png" alt="Typhoon Naming History">
+        <label>
+          <input type="radio" name="q3" value="A"> A. By the names of famous meteorologists
+        </label>
+        <label>
+          <input type="radio" name="q3" value="B"> B. By the time they occurred or the location where they struck
+        </label>
+        <label>
+          <input type="radio" name="q3" value="C"> C. By alphabetical names assigned by the government
+        </label>
+        <label>
+          <input type="radio" name="q3" value="D"> D. By their size and wind speed
+        </label>
+        <div class="feedback" id="q3Feedback"></div>
+      </div>
+
+      <!-- Add more questions with images here -->
+
+      <button type="button" onclick="submitQuiz()">Submit Quiz</button>
+    </form>
+
+    <div id="results" style="display: none;">
+      <h2>Results</h2>
+      <p id="score"></p>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    const correctAnswers = {
+      q1: "D",
+      q2: "A",
+      q3: "B",
+      // Add more correct answers here
+    };
+
+    function submitQuiz() {
+      let score = 0;
+      const totalQuestions = Object.keys(correctAnswers).length;
+
+      // Check answers
+      for (const question in correctAnswers) {
+        const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+        const feedback = document.getElementById(`${question}Feedback`);
+
+        if (selectedAnswer) {
+          if (selectedAnswer.value === correctAnswers[question]) {
+            score++;
+            feedback.innerHTML = `<span class="correct">Correct!</span>`;
+          } else {
+            feedback.innerHTML = `<span class="incorrect">Incorrect. The correct answer is ${correctAnswers[question]}.</span>`;
+          }
+        } else {
+          feedback.innerHTML = `<span class="incorrect">Please select an answer.</span>`;
+        }
+      }
+
+      // Display results
+      const resultsDiv = document.getElementById("results");
+      const scoreParagraph = document.getElementById("score");
+      const messageParagraph = document.getElementById("message");
+
+      resultsDiv.style.display = "block";
+      scoreParagraph.textContent = `You scored ${score} out of ${totalQuestions}.`;
+      messageParagraph.textContent = `Your score will be sent to your teacher.`;
+
+      // Simulate sending score to teacher's email
+      const teacherEmail = document.getElementById("teacherEmail").value;
+      console.log(`Score sent to ${florino.melanio@gmail.com}: ${score}/${totalQuestions}`);
+    }
+  </script>
+</body>
+</html>
